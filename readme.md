@@ -4,9 +4,9 @@
 
 ### Introduction
 
-A number of Qlik Sense customers use an enterprise mobility management platform, such as MobileIron or AirWatch, to manage their corporate mobile devices. In some cases these solutions will not work when connecting to the Hub using Safari. The root cause of the issue is a bug in iOS that causes WebSocket traffic to be blocked when trying to connect to Qlik Sense.
+Several Qlik Sense customers use an enterprise mobility management platform, such as MobileIron or AirWatch, to manage their corporate mobile devices. In some cases, these solutions will not work when connecting to the Hub using Safari. The root cause of the issue is a bug in iOS that causes WebSocket traffic to be blocked when trying to connect to Qlik Sense.
 
-This iOS app offers a simple WebKit wrapper that leverages UIWebView and allows customers to circumvent this issue. An additional benefit is the appearance of a native app experience and removing the address bar for extra screen real estate.
+This iOS app offers a simple WebKit wrapper that leverages UIWebView and allows customers to circumvent this issue. Additional benefits are the appearance of a native app experience and removal of the address bar for extra screen real estate.
 
 ### Problem Description
 Websocket traffic issues are not always easy to uncover. In many cases users can still connect to the QMC and the Hub. The real issue occurs when a user tries to open an app. From here it appears that the app is opening, but the users ends up only seeing the Qlik Sense bubbles. 
