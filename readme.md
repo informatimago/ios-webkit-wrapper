@@ -14,13 +14,13 @@ Websocket traffic issues are not always easy to uncover. In many cases users can
 ![Bubbles](/screenshots/Bubbles.png?raw=true "Bubbles")
 
 ### Confirming Websocket Issue
-There is a great extension on branch that can help identify if Websocket traffic is being block. It is called 
+There is a great extension on branch that can help identify if Websocket traffic is being blocked. It is called 
 [Qlik Sense Websocket Connectivity Tester](http://branch.qlik.com/#!/project/56728f52d1e497241ae69865) and was created by Fredrik Lautrup.
 
 You have a Websocket issue if you see this...
 ![Bad_Websocket_Test](/screenshots/Bad_Websocket_Test.png?raw=true "Bad_Websocket_Test")
 
-If you see something like this Websocket traffic is not an issue...
+If you see something like this, Websocket traffic is not an issue...
 ![Good_Websocket_Test](/screenshots/Good_Websocket_Test.png?raw=true "Good_Websocket_Test")
 
 
