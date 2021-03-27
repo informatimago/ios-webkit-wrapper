@@ -41,7 +41,7 @@ class RootViewController: UIViewController {
         openInwebviewBtn.layer.borderWidth = 0.5
 
         openInWKWebviewbtn.layer.borderColor = UIColor.black.cgColor
-        openInWKWebviewbtn.layer.borderWidth = 0.5  
+        openInWKWebviewbtn.layer.borderWidth = 0.5
 
         // Do any additional setup after loading the view.
     }
@@ -51,7 +51,7 @@ class RootViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @IBAction func openInWebviewPressed(_ sender: Any) {
         if (self.urlTextField.text?.characters.count)! <= 5 {
             return

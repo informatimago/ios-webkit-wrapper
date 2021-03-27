@@ -55,7 +55,7 @@ class WKWebViewViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
 
     }
 
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("WebView content loaded.")
     }

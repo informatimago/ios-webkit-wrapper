@@ -37,7 +37,7 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         self.automaticallyAdjustsScrollViewInsets = false;
         definesPresentationContext = true
 
-        title = "Bardess Mobile Qlik Sense App"
+        title = "SBDE Mobile Web App"
         backButton.setTitle("<", for: UIControlState.normal)
 
         loadURL()
@@ -145,7 +145,7 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         if MFMailComposeViewController.canSendMail() && !Platform.isSimulator{
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["jfleming@bardess.com"])
+            mail.setToRecipients(["ben@sbde.fr"])
             mail.setMessageBody("<p>Console Output</p>", isHTML: true)
             mail.setSubject("Output")
 

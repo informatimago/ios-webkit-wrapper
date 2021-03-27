@@ -15,10 +15,11 @@ struct Platform {
 
 let urlLocation = "lastUsedUrlLocation"
 
-let defaultURLString = "http://demos.bardesscloud.com/hub/stream/8b04d423-1e7e-4bd1-bedc-9a7ffb1240aa"
+let defaultURLString = "http://www.sbde.fr/"
 
-//let defaultURLString = "https://sense-demo.qlik.com/sense/app/372cbc85-f7fb-4db6-a620-9a5367845dce/sheet/JzJMza/state/analysis"
-//let defaultURLString = "https://sense-demo.qlik.com/hub"
+// let defaultURLString = "http://demos.bardesscloud.com/hub/stream/8b04d423-1e7e-4bd1-bedc-9a7ffb1240aa"
+// let defaultURLString = "https://sense-demo.qlik.com/sense/app/372cbc85-f7fb-4db6-a620-9a5367845dce/sheet/JzJMza/state/analysis"
+// let defaultURLString = "https://sense-demo.qlik.com/hub"
 
 
 class WriteToFileHelper: NSObject {
