@@ -6,11 +6,9 @@
 
 import UIKit
 import Foundation
+import WebKit
 
 
-
-//window.qvangularGlobal.getService()
-//qlik.resize();
 let showInWebviewIdentifier = "showInWebView"
 let showInWKWebviewIdentifier = "showInWKWebView"
 
@@ -28,9 +26,14 @@ class RootViewController: UIViewController {
         } else {
             WriteToFileHelper.redirectConsoleLogToDocumentFolder()
         }
-        let userAgent = UIWebView().stringByEvaluatingJavaScript(from: "navigator.userAgent")!
+        var userAgent : String = "WebKit"
+        WKWebView().evaluateJavaScript("navigator.userAgent") { (result, error) in
+            if error == nil {
+                userAgent = result as! String
+            }
+        }
 
-        WriteToFileHelper.writeToFile(text: userAgent)
+       WriteToFileHelper.writeToFile(text: userAgent)
        if let savedUrl =  WriteToFileHelper.loadUrl() {
             urlTextField.text = savedUrl
         } else
@@ -53,14 +56,14 @@ class RootViewController: UIViewController {
     }
 
     @IBAction func openInWebviewPressed(_ sender: Any) {
-        if (self.urlTextField.text?.characters.count)! <= 5 {
+        if (self.urlTextField.text?.count)! <= 5 {
             return
         }
         performSegue(withIdentifier: showInWebviewIdentifier, sender: self)
     }
 
     @IBAction func openInWKWebViewPressed(_ sender: Any) {
-        if (self.urlTextField.text?.characters.count)! <= 5 {
+        if (self.urlTextField.text?.count)! <= 5 {
             return
         }
         performSegue(withIdentifier: showInWKWebviewIdentifier, sender: self)

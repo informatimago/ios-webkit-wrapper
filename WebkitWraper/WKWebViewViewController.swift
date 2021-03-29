@@ -31,7 +31,7 @@ class WKWebViewViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         }
 
         let myURL = NSURL(string: urlString)
-        let request = NSURLRequest(url: myURL as! URL)
+        let request = NSURLRequest(url: myURL! as URL)
         wkWebView.load(request as URLRequest)
 
     }
@@ -46,11 +46,11 @@ class WKWebViewViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         // Dispose of any resources that can be recreated.
     }
 
-    func webViewDidStartLoad(_ webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: WKWebView) {
 
     }
 
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: WKWebView) {
 
 
     }
@@ -60,11 +60,11 @@ class WKWebViewViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         print("WebView content loaded.")
     }
 
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: WKWebView, shouldStartLoadWith request: URLRequest, navigationType: WKNavigationType) -> Bool {
         return true
     }
 
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+    func webView(_ webView: WKWebView, didFailLoadWithError error: Error) {
         print(error)
     }
 

@@ -7,8 +7,9 @@
 import UIKit
 import MessageUI
 import SafariServices
+import WebKit
 
-class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, NSURLConnectionDelegate, URLSessionDelegate, UITextFieldDelegate {
+class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeViewControllerDelegate, NSURLConnectionDelegate, URLSessionDelegate, UITextFieldDelegate, WKUIDelegate {
     var authRequest : URLRequest? = nil
     var authenticated = false
     var failedRequest : URLRequest? = nil
@@ -17,15 +18,14 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
     var urlSession:URLSession!
     var urlSessionConfig:URLSessionConfiguration!
 
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     var urlString:String = ""
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
 
     var timer : Timer? = nil
 
-    var loadingUnvalidatedHTTPSPage:Bool! = true
-    var connection:NSURLConnection!
+    var connection:URLSession!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +34,12 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
 
         self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 0)
         self.extendedLayoutIncludesOpaqueBars = false;
-        self.automaticallyAdjustsScrollViewInsets = false;
+//        self.automaticallyAdjustsScrollViewInsets = false;
+//        self.contentInsetAdjustmentBehavior =
         definesPresentationContext = true
 
         title = "SBDE Mobile Web App"
-        backButton.setTitle("<", for: UIControlState.normal)
+        backButton.setTitle("<", for: UIControl.State.normal)
 
         loadURL()
 
@@ -49,7 +50,7 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
 
     }
 
-    func addButtonClicked(_ sender: UIButton){
+    @objc func addButtonClicked(_ sender: UIButton){
 
         let alertController = UIAlertController(title: "Update URL", message: "", preferredStyle: .alert)
 
@@ -69,7 +70,8 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         let loadUrlAction = UIAlertAction(title: "Load URL", style: .default, handler: {
             (action : UIAlertAction!) -> Void in
             let textField = alertController.textFields![0] as UITextField
-            if self.validateUrl(urlString: textField.text!) == true {
+            print("url = " + textField.text!)
+            if self.validateUrl(urlString: textField.text!)  {
                 self.urlString = (textField.text)!
                 WriteToFileHelper.saveURL(url: self.urlString)
                 self.loadURL()
@@ -120,13 +122,10 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         print("trying to load:  \(urlString)")
         WriteToFileHelper.writeToFile(text: "trying to load:  " + urlString)
         let requestObj = NSURLRequest(url: url!, cachePolicy: NSURLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval:30.0)
-        if urlString.lowercased().contains("https") {
-            let conn:NSURLConnection = NSURLConnection(request: requestObj as URLRequest, delegate: self)!
-            conn.start()
-            loadingUnvalidatedHTTPSPage = true
-        }
-        webView.delegate = self
-        webView.loadRequest(requestObj as URLRequest)
+        let conn = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        conn.downloadTask(with: requestObj as URLRequest)
+        webView.uiDelegate = self
+        webView.load(requestObj as URLRequest)
     }
 
     func connection(_ connection: NSURLConnection, canAuthenticateAgainstProtectionSpace protectionSpace: URLProtectionSpace) -> Bool
@@ -147,7 +146,7 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
             mail.mailComposeDelegate = self
             mail.setToRecipients(["ben@sbde.fr"])
             mail.setMessageBody("<p>Console Output</p>", isHTML: true)
-            mail.setSubject("Output")
+            mail.setSubject("Web Wrapper Output")
 
             let paths: NSArray = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
             let documentsDirectory: NSString = paths[0] as! NSString
@@ -182,40 +181,47 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         // Dispose of any resources that can be recreated.
     }
 
-    func webViewDidStartLoad(_ webView: UIWebView) {
+    private func webViewDidStartLoad(_ webView: WKWebView) {
         WriteToFileHelper.writeToFile(text: "webViewDidStartLoad  ")
         if timer?.isValid == true {
             timer?.invalidate()
         }
     }
 
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+    private func scalesPageToFit(_ webView: WKWebView){
+        let javaScript = """
+            var meta = document.createElement('meta');
+                        meta.setAttribute('name', 'viewport');
+                        meta.setAttribute('content', 'width=device-width');
+                        document.getElementsByTagName('head')[0].appendChild(meta);
+            """
+
+        webView.evaluateJavaScript(javaScript)
+    }
+    private func webViewDidFinishLoad(_ webView: WKWebView) {
         webView.autoresizesSubviews = true
-        webView.scalesPageToFit = true
+        scalesPageToFit(webView)
         webView.contentMode = .scaleAspectFit
 
-        if webView.request?.url?.absoluteString.range(of:"/app/") != nil {
+        if webView.url?.absoluteString.range(of:"/app/") != nil {
             timer = Timer.scheduledTimer(timeInterval: TimeInterval(3), target: self, selector: #selector(WebViewViewController.forceRedrawWebviewContent), userInfo: nil, repeats: true)
         }
     }
 
     // MARK - DELEGATE METHODS WEBVIEW
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+    private func webView(_ webView: WKWebView, didFailLoadWithError error: Error) {
         print("Webview fail with error \(error)");
         WriteToFileHelper.writeToFile(text: "Webview fail with error" + "  " + error.localizedDescription)
         self.showErrorMessage(title: "Error", message: error.localizedDescription)
     }
 
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        let message = "Webview shouldStartLoadWithRequest  \(self.loadingUnvalidatedHTTPSPage) "
+    private func webView(_ webView: WKWebView, shouldStartLoadWith request: URLRequest, navigationType: WKNavigationType) -> Bool {
+        let message = "Webview shouldStartLoadWithRequest"
         print(request.url?.absoluteString ?? "no request")
-        webView.scalesPageToFit = true
+        scalesPageToFit(webView)
         WriteToFileHelper.writeToFile(text: message)
-        if (self.loadingUnvalidatedHTTPSPage == false) {
-            self.connection = NSURLConnection(request: request as URLRequest, delegate: self)
-            self.connection.start();
-            return false;
-        }
+        self.connection = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        self.connection.downloadTask(with: request)
         return true;
     }
 
@@ -230,11 +236,10 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
 
     func connection(_ connection: NSURLConnection, NSURLConnection response:URLResponse){
         let requestObj:NSURLRequest = NSURLRequest(url: URL(string: urlString)!, cachePolicy: NSURLRequest.CachePolicy.returnCacheDataElseLoad, timeoutInterval: 20.0)
-        self.loadingUnvalidatedHTTPSPage = false
-        self.webView.loadRequest(requestObj as URLRequest)
+        self.webView.load(requestObj as URLRequest)
         let log = "connection response" + (requestObj.url?.absoluteString)!
         WriteToFileHelper.writeToFile(text: log)
-        self.connection.cancel()
+        self.connection.invalidateAndCancel()
     }
 
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
@@ -265,8 +270,8 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         WriteToFileHelper.writeToFile(text: "connectionDidFinishLoading")
     }
 
-    func forceRedrawWebviewContent() {
-        if webView.request?.url?.absoluteString.range(of:"/app/") != nil {
+    @objc func forceRedrawWebviewContent() {
+        if webView.url?.absoluteString.range(of:"/app/") != nil {
             webView.sizeToFit()
         }
         webView.setNeedsDisplay(view.bounds)
