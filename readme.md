@@ -9,12 +9,12 @@ Several Qlik Sense customers use an enterprise mobility management platform, suc
 This iOS app offers a simple WebKit wrapper that leverages UIWebView and allows customers to circumvent this issue. Additional benefits are the appearance of a native app experience and removal of the address bar for extra screen real estate.
 
 ### Problem Description
-Websocket traffic issues are not always easy to uncover. In many cases users can still connect to the QMC and the Hub. The real issue occurs when a user tries to open an app. From here it appears that the app is opening, but the users ends up only seeing the Qlik Sense bubbles. 
+Websocket traffic issues are not always easy to uncover. In many cases users can still connect to the QMC and the Hub. The real issue occurs when a user tries to open an app. From here it appears that the app is opening, but the users ends up only seeing the Qlik Sense bubbles.
 
 ![Bubbles](/screenshots/Bubbles.png?raw=true "Bubbles")
 
 ### Confirming Websocket Issue
-There is a great extension on branch that can help identify if Websocket traffic is being blocked. It is called 
+There is a great extension on branch that can help identify if Websocket traffic is being blocked. It is called
 [Qlik Sense Websocket Connectivity Tester](http://branch.qlik.com/#!/project/56728f52d1e497241ae69865) and was created by Fredrik Lautrup.
 
 You have a Websocket issue if you see this...

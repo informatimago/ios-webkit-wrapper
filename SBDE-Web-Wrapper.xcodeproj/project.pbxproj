@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AB6EFF72637AB3700FB0DC4 /* ios-marketing-1024x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AB6EFF62637AB3700FB0DC4 /* ios-marketing-1024x1024.png */; };
 		381BF3231E02BCCB0091C9D0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381BF3221E02BCCB0091C9D0 /* MessageUI.framework */; };
 		3848D7D61DE56F7900A616AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848D7D51DE56F7900A616AA /* AppDelegate.swift */; };
 		3848D7D81DE56F7900A616AA /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848D7D71DE56F7900A616AA /* WebViewViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AB6EFF62637AB3700FB0DC4 /* ios-marketing-1024x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-marketing-1024x1024.png"; sourceTree = "<group>"; };
 		381BF3221E02BCCB0091C9D0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		383C0ECA1DF6ED900013D533 /* WebkitWrapper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WebkitWrapper-Bridging-Header.h"; sourceTree = "<group>"; };
 		3848D7D21DE56F7900A616AA /* SBDE-Web-Wrapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SBDE-Web-Wrapper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 		38B13FF81E26011F005B846A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2AB6EFF62637AB3700FB0DC4 /* ios-marketing-1024x1024.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				3848D7E01DE56F7900A616AA /* LaunchScreen.storyboard in Resources */,
 				3848D7DD1DE56F7900A616AA /* Assets.xcassets in Resources */,
 				3848D7DB1DE56F7900A616AA /* Main.storyboard in Resources */,
+				2AB6EFF72637AB3700FB0DC4 /* ios-marketing-1024x1024.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
