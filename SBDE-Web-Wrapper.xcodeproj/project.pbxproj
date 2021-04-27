@@ -24,8 +24,8 @@
 
 /* Begin PBXFileReference section */
 		381BF3221E02BCCB0091C9D0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		383C0ECA1DF6ED900013D533 /* WebkitWraper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WebkitWraper-Bridging-Header.h"; sourceTree = "<group>"; };
-		3848D7D21DE56F7900A616AA /* WebkitWraper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebkitWraper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		383C0ECA1DF6ED900013D533 /* WebkitWrapper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WebkitWrapper-Bridging-Header.h"; sourceTree = "<group>"; };
+		3848D7D21DE56F7900A616AA /* SBDE-Web-Wrapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SBDE-Web-Wrapper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3848D7D51DE56F7900A616AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3848D7D71DE56F7900A616AA /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		3848D7DA1DE56F7900A616AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		3848D7C91DE56F7900A616AA = {
 			isa = PBXGroup;
 			children = (
-				3848D7D41DE56F7900A616AA /* WebkitWraper */,
+				3848D7D41DE56F7900A616AA /* SBDE-Web-Wrapper */,
 				3848D7D31DE56F7900A616AA /* Products */,
 				38EAB9411DF5A28A007AD06D /* Frameworks */,
 			);
@@ -67,27 +67,27 @@
 		3848D7D31DE56F7900A616AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3848D7D21DE56F7900A616AA /* WebkitWraper.app */,
+				3848D7D21DE56F7900A616AA /* SBDE-Web-Wrapper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3848D7D41DE56F7900A616AA /* WebkitWraper */ = {
+		3848D7D41DE56F7900A616AA /* SBDE-Web-Wrapper */ = {
 			isa = PBXGroup;
 			children = (
-				38B13FF81E26011F005B846A /* Resources */,
 				3848D7D51DE56F7900A616AA /* AppDelegate.swift */,
 				3848D7D71DE56F7900A616AA /* WebViewViewController.swift */,
-				3848D7D91DE56F7900A616AA /* Main.storyboard */,
-				3848D7DC1DE56F7900A616AA /* Assets.xcassets */,
-				3848D7DE1DE56F7900A616AA /* LaunchScreen.storyboard */,
-				3848D7E11DE56F7900A616AA /* Info.plist */,
 				38EAB93D1DF59DE3007AD06D /* RootViewController.swift */,
 				38EAB93F1DF59E22007AD06D /* WKWebViewViewController.swift */,
-				383C0ECA1DF6ED900013D533 /* WebkitWraper-Bridging-Header.h */,
+				383C0ECA1DF6ED900013D533 /* WebkitWrapper-Bridging-Header.h */,
 				386297611E0C537D00C46D85 /* WriteToFileHelper.swift */,
+				38B13FF81E26011F005B846A /* Resources */,
+				3848D7DC1DE56F7900A616AA /* Assets.xcassets */,
+				3848D7D91DE56F7900A616AA /* Main.storyboard */,
+				3848D7DE1DE56F7900A616AA /* LaunchScreen.storyboard */,
+				3848D7E11DE56F7900A616AA /* Info.plist */,
 			);
-			path = WebkitWraper;
+			path = "SBDE-Web-Wrapper";
 			sourceTree = "<group>";
 		};
 		38B13FF81E26011F005B846A /* Resources */ = {
@@ -112,9 +112,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3848D7D11DE56F7900A616AA /* WebkitWraper */ = {
+		3848D7D11DE56F7900A616AA /* SBDE-Web-Wrapper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3848D7E41DE56F7900A616AA /* Build configuration list for PBXNativeTarget "WebkitWraper" */;
+			buildConfigurationList = 3848D7E41DE56F7900A616AA /* Build configuration list for PBXNativeTarget "SBDE-Web-Wrapper" */;
 			buildPhases = (
 				3848D7CE1DE56F7900A616AA /* Sources */,
 				3848D7CF1DE56F7900A616AA /* Frameworks */,
@@ -124,9 +124,9 @@
 			);
 			dependencies = (
 			);
-			name = WebkitWraper;
+			name = "SBDE-Web-Wrapper";
 			productName = WebkitWraper;
-			productReference = 3848D7D21DE56F7900A616AA /* WebkitWraper.app */;
+			productReference = 3848D7D21DE56F7900A616AA /* SBDE-Web-Wrapper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -146,7 +146,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3848D7CD1DE56F7900A616AA /* Build configuration list for PBXProject "WebkitWraper" */;
+			buildConfigurationList = 3848D7CD1DE56F7900A616AA /* Build configuration list for PBXProject "SBDE-Web-Wrapper" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,7 +159,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3848D7D11DE56F7900A616AA /* WebkitWraper */,
+				3848D7D11DE56F7900A616AA /* SBDE-Web-Wrapper */,
 			);
 		};
 /* End PBXProject section */
@@ -337,24 +337,25 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8W59692BCX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=0",
 				);
-				INFOPLIST_FILE = WebkitWraper/Info.plist;
+				INFOPLIST_FILE = "SBDE-Web-Wrapper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PODS_ROOT = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.sbde.ios-webkit-wrapper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WebkitWraper/WebkitWraper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SBDE-Web-Wrapper//WebkitWrapper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -368,24 +369,25 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8W59692BCX;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=0",
 				);
-				INFOPLIST_FILE = WebkitWraper/Info.plist;
+				INFOPLIST_FILE = "SBDE-Web-Wrapper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PODS_ROOT = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.sbde.ios-webkit-wrapper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WebkitWraper/WebkitWraper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SBDE-Web-Wrapper//WebkitWrapper-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -394,7 +396,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3848D7CD1DE56F7900A616AA /* Build configuration list for PBXProject "WebkitWraper" */ = {
+		3848D7CD1DE56F7900A616AA /* Build configuration list for PBXProject "SBDE-Web-Wrapper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3848D7E21DE56F7900A616AA /* Debug */,
@@ -403,7 +405,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3848D7E41DE56F7900A616AA /* Build configuration list for PBXNativeTarget "WebkitWraper" */ = {
+		3848D7E41DE56F7900A616AA /* Build configuration list for PBXNativeTarget "SBDE-Web-Wrapper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3848D7E51DE56F7900A616AA /* Debug */,

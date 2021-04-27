@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:WebkitWraper.xcodeproj">
+      location = "self:/Users/pjb/works/sbde/ios-webkit-wrapper/SBDE-Web-Wrapper.xcodeproj">
    </FileRef>
 </Workspace>

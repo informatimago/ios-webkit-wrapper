@@ -13,8 +13,10 @@ struct Platform {
 
 }
 
-let urlLocation = "lastUsedUrlLocation"
+let urlKey = "lastUsedUrlLocation"
+let emailKey = "lastUsedEmailAddress"
 
+let defaultEmailAddress = "ben@sbde.fr"
 let defaultURLString = "http://www.sbde.fr/"
 
 // let defaultURLString = "http://demos.bardesscloud.com/hub/stream/8b04d423-1e7e-4bd1-bedc-9a7ffb1240aa"
@@ -144,15 +146,26 @@ class WriteToFileHelper: NSObject {
         }
     }
 
-   static func loadUrl() -> String? {
+   static func loadEmail() -> String? {
         let pref = UserDefaults.standard
-        return pref.value(forKey: urlLocation) as! String?
+        return pref.value(forKey: emailKey) as! String?
     }
 
-    static func saveURL(url:String) {
+    static func saveEmail(_ emailAddress:String) {
         let pref = UserDefaults.standard
-        pref.setValue(url, forKey: urlLocation)
+        pref.setValue(emailAddress, forKey: emailKey)
         pref.synchronize()
     }
+
+    static func loadUrl() -> String? {
+         let pref = UserDefaults.standard
+         return pref.value(forKey: urlKey) as! String?
+     }
+
+     static func saveURL(_ url:String) {
+         let pref = UserDefaults.standard
+         pref.setValue(url, forKey: urlKey)
+         pref.synchronize()
+     }
 
 }

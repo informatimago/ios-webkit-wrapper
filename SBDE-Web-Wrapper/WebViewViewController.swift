@@ -14,17 +14,17 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
     var authenticated = false
     var failedRequest : URLRequest? = nil
 
-    @IBOutlet weak var bottomGuide: NSLayoutConstraint!
     var urlSession:URLSession!
     var urlSessionConfig:URLSessionConfiguration!
-
-    @IBOutlet weak var webView: WKWebView!
     var urlString:String = ""
+    var emailAddress:String="ben@sbde.fr"
+    
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var menuButton: UIButton!
 
     var timer : Timer? = nil
-
     var connection:URLSession!
 
     override func viewDidLoad() {
@@ -37,83 +37,113 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
 //        self.automaticallyAdjustsScrollViewInsets = false;
 //        self.contentInsetAdjustmentBehavior =
         definesPresentationContext = true
-
         title = "SBDE Mobile Web App"
-        backButton.setTitle("<", for: UIControl.State.normal)
-
         loadURL()
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(WebViewViewController.addButtonClicked))
+    }
+
+    
+    func loadDefaultValues(){
+        if let email = WriteToFileHelper.loadEmail() {
+            emailAddress = email
+        }else{
+            emailAddress = defaultEmailAddress
+        }
+        if let url = WriteToFileHelper.loadUrl() {
+            urlString = url
+        }else{
+            urlString = defaultURLString
+        }
     }
 
     func functionThatYouWantTriggeredOnRotation() {
 
     }
+    
+    func textFieldShouldReturn(_ field: UITextField) -> Bool {
+        return true
+    }
 
-    @objc func addButtonClicked(_ sender: UIButton){
+    func textFieldDidEndEditing(_ field:UITextField){
+        print("tag = " + String(field.tag) + "  text = "+field.text!)
+        switch(field.tag){
+        case 1: // emailAddress
+            if self.validateEmail(field.text!) {
+                self.emailAddress=field.text!
+                WriteToFileHelper.saveEmail(self.emailAddress)
+           } else {
+                self.showErrorMessage(title: "Error", message: "Invalid email address")
+            }
+        default: // url
+            if self.validateUrl(field.text!) {
+                self.urlString=field.text!
+                WriteToFileHelper.saveURL(self.urlString)
+            } else {
+                self.showErrorMessage(title: "Error", message: "Invalid URL")
+            }
+        }
+    }
+    
 
+    @IBAction func addButtonClicked(_ sender: Any){
+        loadDefaultValues()
+        
         let alertController = UIAlertController(title: "Update URL", message: "", preferredStyle: .alert)
 
         let sentEmailAction = UIAlertAction(title: "Sent Email", style: .default, handler: {
             alert -> Void in
-
-            self.sendToMail()
+            self.sendToMail(sender)
         })
 
-        let goToDetaultUrl = UIAlertAction(title: "Load Default Website", style: .default,  handler: {(action : UIAlertAction) -> Void in
+        let goToDefaultUrl = UIAlertAction(title: "Load Default Website", style: .default,  handler: {(action : UIAlertAction) -> Void in
             self.urlString = defaultURLString
-            WriteToFileHelper.saveURL(url: self.urlString)
+            WriteToFileHelper.saveURL(self.urlString)
             self.loadURL()
         })
 
-
         let loadUrlAction = UIAlertAction(title: "Load URL", style: .default, handler: {
             (action : UIAlertAction!) -> Void in
-            let textField = alertController.textFields![0] as UITextField
-            print("url = " + textField.text!)
-            if self.validateUrl(urlString: textField.text!)  {
-                self.urlString = (textField.text)!
-                WriteToFileHelper.saveURL(url: self.urlString)
+            print("URL = " + self.urlString)
+            if self.validateUrl(self.urlString)  {
+                WriteToFileHelper.saveURL(self.urlString)
                 self.loadURL()
             } else {
-                self.showErrorMessage(title: "Error", message: "Invalid url")
+                self.showErrorMessage(title: "Error", message: "Invalid URL")
             }
         })
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
             (action : UIAlertAction!) -> Void in
-
         })
 
         alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Enter url Here"
-            textField.text = self.urlString
+            textField.placeholder = "Enter your email here"
+            textField.text = self.emailAddress
+            textField.tag = 1
             textField.delegate = self
             textField.returnKeyType = .go
         }
-
         alertController.addAction(sentEmailAction)
-        alertController.addAction(goToDetaultUrl)
+
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Enter url Here"
+            textField.text = self.urlString
+            textField.tag = 2
+            textField.delegate = self
+            textField.returnKeyType = .go
+        }
+        alertController.addAction(goToDefaultUrl)
         alertController.addAction(loadUrlAction)
         alertController.addAction(cancelAction)
+        
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if self.validateUrl(urlString: textField.text!) == true {
-            urlString = textField.text!
-            loadURL()
-        } else {
-            self.showErrorMessage(title: "Error", message: "Invalid url")
-        }
-        return true
-    }
-
     func loadURL() {
-        if let savedUrl =  WriteToFileHelper.loadUrl() {
+        if let savedUrl = WriteToFileHelper.loadUrl() {
             urlString = savedUrl
-        } else
-        {
+        } else {
             urlString = defaultURLString
         }
 
@@ -139,12 +169,22 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
         return documentsDirectory
     }
 
-    func sendToMail(){
+    func showAlert(_ sender: UIButton, title:String, message:String) {
+        
+        let alert = UIAlertController(title:title,
+                                      message:message,
+                                      preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func sendToMail(_ sender: Any){
         //Check to see the device can send email.
+        loadDefaultValues()
         if MFMailComposeViewController.canSendMail() && !Platform.isSimulator{
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["ben@sbde.fr"])
+            mail.setToRecipients([emailAddress])
             mail.setMessageBody("<p>Console Output</p>", isHTML: true)
             mail.setSubject("Web Wrapper Output")
 
@@ -164,8 +204,11 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
             present(mail, animated: true)
         } else {
             // show failure alert
-        }
-    }
+            showAlert(sender as! UIButton,
+                      title: "Cannot send email from the Simulator",
+                      message: "The application is running on the simulator.  Please, try it on an actual device to send the log email.")
+        }}
+
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
@@ -287,7 +330,7 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
     }
 
     @IBAction func nextButtonPressed(_ sender: Any) {
-        if webView.canGoBack {
+        if webView.canGoForward {
             webView.goForward()
         }
     }
@@ -295,9 +338,14 @@ class WebViewViewController: UIViewController, UIWebViewDelegate, MFMailComposeV
 
 extension WebViewViewController {
 
-    func validateUrl (urlString: String) -> Bool {
-        let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
-        return NSPredicate(format: "SELF MATCHES %@", urlRegEx).evaluate(with: urlString)
+    func validateEmail (_ email:String) -> Bool {
+        let re = ".*@.*"
+        return NSPredicate(format: "SELF MATCHES %@", re).evaluate(with: email)
+    }
+    
+    func validateUrl (_ urlString: String) -> Bool {
+        let re = "((https|http)://.*)"
+        return NSPredicate(format: "SELF MATCHES %@", re).evaluate(with: urlString)
     }
 
     func showErrorMessage(title:String, message:String) {

@@ -21,9 +21,7 @@ class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if Platform.isSimulator {
-
-        } else {
+        if !Platform.isSimulator {
             WriteToFileHelper.redirectConsoleLogToDocumentFolder()
         }
         var userAgent : String = "WebKit"
@@ -32,9 +30,9 @@ class RootViewController: UIViewController {
                 userAgent = result as! String
             }
         }
-
-       WriteToFileHelper.writeToFile(text: userAgent)
-       if let savedUrl =  WriteToFileHelper.loadUrl() {
+        
+        WriteToFileHelper.writeToFile(text: userAgent)
+        if let savedUrl =  WriteToFileHelper.loadUrl() {
             urlTextField.text = savedUrl
         } else
         {
@@ -42,10 +40,10 @@ class RootViewController: UIViewController {
         }
         openInwebviewBtn.layer.borderColor = UIColor.black.cgColor
         openInwebviewBtn.layer.borderWidth = 0.5
-
+        
         openInWKWebviewbtn.layer.borderColor = UIColor.black.cgColor
         openInWKWebviewbtn.layer.borderWidth = 0.5
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -71,7 +69,7 @@ class RootViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        WriteToFileHelper.saveURL(url: urlTextField.text!)
+        WriteToFileHelper.saveURL(urlTextField.text!)
         if segue.identifier == showInWebviewIdentifier {
             let destinationVC = segue.destination as! WebViewViewController
             destinationVC.updateWithUrlString(url: urlTextField.text!)
